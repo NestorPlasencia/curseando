@@ -27,9 +27,15 @@ get_header(); ?>
 				</header>
 			<?php endif; ?>
 
+			<?php 
+			    $loop = new WP_Query( array( 
+			        'post_type' => 'cursos',   /* edit this line */
+			        'posts_per_page' => 5 ) );
+			?>
+
 			<?php
 			// Start the loop.
-			while ( have_posts() ) : the_post();
+			while ( $loop->have_posts() ) : $loop -> the_post();
 
 				/*
 				 * Include the Post-Format-specific template for the content.

@@ -43,6 +43,8 @@
 				'separator'   => '<span class="screen-reader-text">, </span>',
 			) );
 		?>
+
+		<?php types_render_field("wpcf-imagen_curso",array( 'show_name' => false, 'output' => 'raw', 'id' => the_ID() ) ); ?> 
 	</div><!-- .entry-content -->
 
 	<?php

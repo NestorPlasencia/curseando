@@ -410,96 +410,104 @@ add_action('rest_api_init', 'slug_add_post_data', 1, 1);
 
 function slug_add_post_data() {
     register_rest_field(
-    	'curso',
+    	'cursos',
         'descripcion',
         array(
             'get_callback' => 'slug_get_field',
             'update_callback' => 'slug_update_field',
-            'create_callback' => 'slug_create_field',
             'schema' => null
         )
     );
 
     register_rest_field(
-    	'curso',
+    	'cursos',
         'imagen_curso',
         array(
             'get_callback' => 'slug_get_field',
             'update_callback' => 'slug_update_field',
-            'create_callback' => 'slug_create_field',
             'schema' => null
         )
     );
 
     register_rest_field(
-    	'curso',
+    	'cursos',
         'identidad',
         array(
             'get_callback' => 'slug_get_field',
             'update_callback' => 'slug_update_field',
-            'create_callback' => 'slug_create_field',
             'schema' => null
         )
     );
 
-
-
-    	/*
+    register_rest_field(
+    	'cursos',
+        'temario',
+        array(
+            'get_callback' => 'slug_get_field',
+            'update_callback' => 'slug_update_field',
+            'schema' => null
+        )
+    );
 
     register_rest_field(
-    	'instructor',
+    	'instructores',
         'twitter_name',
         array(
             'get_callback' => 'slug_get_field',
             'update_callback' => 'slug_update_field',
-            'create_callback' => 'slug_create_field',
             'schema' => null
         )
     );
 
     register_rest_field(
-    	'instructor',
+    	'instructores',
         'twitter_link',
         array(
             'get_callback' => 'slug_get_field',
             'update_callback' => 'slug_update_field',
-            'create_callback' => 'slug_create_field',
             'schema' => null
         )
     );
 
     register_rest_field(
-    	'instructor',
+    	'instructores',
         'etiqueta',
         array(
             'get_callback' => 'slug_get_field',
             'update_callback' => 'slug_update_field',
-            'create_callback' => 'slug_create_field',
             'schema' => null
         )
     );
 
     register_rest_field(
-    	'instructor',
+    	'instructores',
         'imagen',
         array(
             'get_callback' => 'slug_get_field',
             'update_callback' => 'slug_update_field',
-            'create_callback' => 'slug_create_field',
             'schema' => null
         )
     );
 
     register_rest_field(
-    	'instructor',
+    	'instructores',
         'cursos',
         array(
             'get_callback' => 'slug_get_field',
             'update_callback' => 'slug_update_field',
-            'create_callback' => 'slug_create_field',
             'schema' => null
         )
-    );*/
+    );
+
+    register_rest_field(
+    	'instructores',
+        'identidad_instructor',
+        array(
+            'get_callback' => 'slug_get_field',
+            'update_callback' => 'slug_update_field',
+            'schema' => null
+        )
+    );
 
 }
  
@@ -510,10 +518,17 @@ function slug_get_field($object, $field_name, $request) {
 
 
 function slug_update_field($value, $object, $field_name) {
-	if (!$value || !is_string($value)) {
+	if (!$value) {
 	    return;
 	}
-	$field_name = 'wpcf-' . $field_name; 		 
-	return update_post_meta($object->ID, $field_name, strip_tags( $value ));
-}
+	$field_name = 'wpcf-' . $field_name;
+	if ($value.lenght > 1){
 
+		foreach ($value as $field_content_single ) {
+			$single_value = $field_content_single;
+			return update_post_meta($object->ID, $field_name, strip_tags( $single_value ));
+		}
+	}else{
+		return update_post_meta($object->ID, $field_name, strip_tags( $value ),false);
+	}	
+}
